@@ -94,7 +94,7 @@ def post(id):
 def add_post(id):
     if request.method == 'POST':
         content = request.form['content']
-        post = Post(content = content, topic_id = id, username = current_user.username)
+        post = Post(content = content, topic_id = id, username = current_user.username, creator_id = current_user.id)
         db_session.add(post)
         db_session.commit()
         flash("New post has been added")
@@ -120,4 +120,4 @@ def update(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

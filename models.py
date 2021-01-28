@@ -27,7 +27,7 @@ class Topic(Base):
     __tablename__ = "topic"
     id = Column(Integer, primary_key=True)
     title = Column(String(30), nullable=False)
-    description = Column(String(80), nullable=False)
+    description = Column(String(200), nullable=False)
 
 class Post(Base):
     __tablename__ = "post"
@@ -36,4 +36,5 @@ class Post(Base):
     username = Column(String(30), nullable=False)
     data = Column(DateTime, default=datetime.now())
     content = Column(String(80), nullable=False)
+    creator_id = Column(Integer, ForeignKey('user.id'), nullable=False)
 
