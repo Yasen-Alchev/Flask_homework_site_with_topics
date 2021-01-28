@@ -40,6 +40,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="{{url_for('index')}}">Home</a>
+                <a class="nav-link active" aria-current="page" href="{{url_for('index')}}">Topics</a>
                 {% if current_user.is_authenticated %}
                 <a class="navbar-brand" aria-current="page" href="#">{{current_user.username}}</a>
                 <!--logout in #-->

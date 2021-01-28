@@ -1,22 +1,28 @@
 {% extends 'base.html' %}
 
-{% block title %} Add Topic {% endblock  %}
-
+{% block title %}
+<ul class="list-group">
+  <li class="list-group-item">
+    Add Topic {% endblock %}
+  </li>
+</ul>
 {% block body %}
-    <div class="row justify-content-center">
-        <div class="col-md-3">
-            <form method="POST" action="/topics">
-              <div class="form-group">
-                <label for="exampleInputTitle1">Title</label>
-                <input type="text" name="title" class="form-control" id="exampleInputTitle1" placeholder="title">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputDesctiption">Description</label>
-                <input type="text" name="description" class="form-control" id="exampleInputDescription1" placeholder="description">
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    </div>
+
+<div class="row justify-content-center">
+  <div class="col-md-3">
+    <form method="POST" action="/topics">
+      <div class="form-group">
+        <label for="exampleInputTitle1">Title</label>
+        <input type="text" name="title" class="form-control" id="exampleInputTitle1" placeholder="title">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputDesctiption">Description</label>
+        <input type="text" name="description" class="form-control" id="exampleInputDescription1"
+          placeholder="description">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
 
 {% endblock %}

@@ -30,6 +30,8 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     if request.method == 'POST':
         user = User.query.filter_by(username=request.form['username']).first()
         if user and check_password_hash(user.password, request.form['password']):
@@ -73,29 +75,21 @@ def logout():
 @app.route('/topics', methods=['GET', 'POST'])
 @login_required
 def topic():
-    
     if request.method == 'POST':
-        title = request.form['title']
-        description = request.form['description']
-        if title:
-            print(1)
-        else:
-            print(0)
-        
-        topic = Topic(title=title, description=description)
+        topic = Topic(title=request.form['title'], description=request.form['description'])
         db_session.add(topic)
         db_session.commit()
         flash("New topic has been added")
         return redirect(url_for('index'))
     return render_template('topics.html')
 
-@app.route('/post/<id>', methods=['GET', 'POST'])
+@app.route('/post/<string:id>', methods=['GET', 'POST'])
 def post(id):
 	topic = Topic.query.filter_by(id = id).first()
 	posts = Post.query.filter_by(topic_id = id).all()
 	return render_template('posts.html', posts = posts, topic = topic)
 
-@app.route('/add_post/<id>', methods=['GET', 'POST'])
+@app.route('/add_post/<string:id>', methods=['GET', 'POST'])
 @login_required
 def add_post(id):
     if request.method == 'POST':
@@ -107,5 +101,23 @@ def add_post(id):
         return redirect('/post/' + id)
     return render_template('create_posts.html')
 
-	
-	
+@app.route('/delete/<int:id>')
+def delete(id):
+    delete_post = Post.query.filter_by(id = id).first()
+    db_session.delete(delete_post)
+    db_session.commit()
+    return redirect("/post/" + str(delete_post.topic_id))
+
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    post = Post.query.filter_by(id = id).first()
+    if request.method == 'POST':
+        post.content = request.form['content']
+        db_session.commit()
+        return redirect("/post/" + str(post.topic_id))
+    else:
+        return render_template('update.html', post=post)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

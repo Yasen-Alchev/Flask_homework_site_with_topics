@@ -34,5 +34,6 @@ class Post(Base):
     id = Column(Integer, primary_key=True)
     topic_id = Column(Integer, ForeignKey('topic.id'), nullable=False)
     username = Column(String(30), nullable=False)
-    data = Column(DateTime, default=datetime.now)
+    data = Column(DateTime, default=datetime.now())
     content = Column(String(80), nullable=False)
+
