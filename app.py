@@ -89,3 +89,23 @@ def topic():
         return redirect(url_for('index'))
     return render_template('topics.html')
 
+@app.route('/post/<id>', methods=['GET', 'POST'])
+def post(id):
+	topic = Topic.query.filter_by(id = id).first()
+	posts = Post.query.filter_by(topic_id = id).all()
+	return render_template('posts.html', posts = posts, topic = topic)
+
+@app.route('/add_post/<id>', methods=['GET', 'POST'])
+@login_required
+def add_post(id):
+    if request.method == 'POST':
+        content = request.form['content']
+        post = Post(content = content, topic_id = id, username = current_user.username)
+        db_session.add(post)
+        db_session.commit()
+        flash("New post has been added")
+        return redirect('/post/' + id)
+    return render_template('create_posts.html')
+
+	
+	

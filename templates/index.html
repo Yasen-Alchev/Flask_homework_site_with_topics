@@ -13,7 +13,9 @@
 
 {% for topic in topics %}
     <div>
-        <h4><a href="#">{{topic.title}}</a></h4>     
+        <h4>
+		    <a href="/post/{{topic.id}}">{{topic.title}}</a>
+	    </h4>     
         <div>{{topic.description}}</div>        
    
     </div>
