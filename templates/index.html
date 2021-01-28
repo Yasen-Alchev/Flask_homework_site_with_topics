@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}SkyDos{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<ul class="list-group">
+    <li class="list-group-item">
+        <h1>Forum for Topics</h1>
+        {% if current_user.is_authenticated %}
+        <a href="{{url_for('topic')}}"><button class="btn btn-primary" id="right-panel-link" href="#right-panel">Add Topic</button></a>
+        {% endif %}
+    </li>
+</ul>
+{% for topic in topics %}
+<ul class="list-group">
+    <li class="list-group-item" >
+        <div>
+            <h1>
+                <a href="/post/{{topic.id}}">{{topic.title}}</a>
+            </h1>
+            <h4>
+                <div>{{topic.description}}</div>
+            </h4>
+        </div>
+    </li>
+</ul>
+{% endfor %}
+
+{% endblock %}
