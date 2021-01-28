@@ -25,7 +25,8 @@ def internal_error(e):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    topics = Topic.query.all()
+    return render_template('index.html', topics=topics)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -46,7 +47,7 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        secure_password = generate_password_hash(password)
+        secure_password = generate_password_hash(password, method='sha256')
         confirm_pasword = request.form['verify_password']
         user = User.query.filter_by(username=username).first()
         if user:
@@ -68,3 +69,23 @@ def logout():
     db_session.commit()
     logout_user()
     return redirect(url_for('login'))
+
+@app.route('/topics', methods=['GET', 'POST'])
+@login_required
+def topic():
+    
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        if title:
+            print(1)
+        else:
+            print(0)
+        
+        topic = Topic(title=title, description=description)
+        db_session.add(topic)
+        db_session.commit()
+        flash("New topic has been added")
+        return redirect(url_for('index'))
+    return render_template('topics.html')
+

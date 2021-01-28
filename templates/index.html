@@ -7,6 +7,17 @@
 
 {% block body %}
 
-<h1>Hello World</h1>
+{% if current_user.is_authenticated %}
+<a href="{{url_for('topic')}}"><button class="btn btn-primary">Add Topic</button></a>
+{% endif %}
+
+{% for topic in topics %}
+    <div>
+        <h4><a href="#">{{topic.title}}</a></h4>     
+        <div>{{topic.description}}</div>        
+   
+    </div>
+
+{% endfor %}
 
 {% endblock %}
