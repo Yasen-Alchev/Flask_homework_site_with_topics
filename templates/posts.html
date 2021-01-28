@@ -10,25 +10,25 @@
 <ul class="list-group">
     <li class="list-group-item">
         <h2>{{topic.title}}</h2>
-{% if current_user.is_authenticated %}
+        {% if current_user.is_authenticated %}
         <a href="/add_post/{{topic.id}}"><button class="btn btn-primary">Add Post</button></a>
+        {% endif %}
     </li>
 </ul>
-{% endif %}
 
 {% for post in posts %}
 <ul class="list-group">
     <li class="list-group-item">
         <div>
             <div>
-                posted by: {{post.username}}
+                Posted by: {{post.username}}
             </div>
             <div>
-                date of creation:
-                {{post.data.strftime('%Y-%m-%d')}}
+                Date: 
+                {{post.data.strftime('%A %B, %d %Y %H:%M:%S')}}
             </div>
             <div>
-                <h4>{{post.content}}</h4>
+                <h3>{{post.content}}</h3>
             </div>
             {% if current_user.id == post.creator_id %}
             <a href="/delete/{{post.id}}"><button class="btn btn-primary">Delete Post</button></a>

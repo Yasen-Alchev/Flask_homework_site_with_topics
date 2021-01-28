@@ -39,6 +39,8 @@ def login():
             db_session.commit()
             login_user(user)
             return redirect(url_for('index'))
+        else:
+            flash("Invalid username or password")
     return render_template('login.html')
 
 
@@ -59,7 +61,7 @@ def register():
             user = User(username=username, password=secure_password)
             db_session.add(user)
             db_session.commit()
-            return redirect(url_for('index'))
+            return redirect(url_for('login'))
         else:
             flash("Passwords doesn`t match!","danger")
     return render_template("register.html")
@@ -70,6 +72,7 @@ def logout():
     current_user.login_id = None
     db_session.commit()
     logout_user()
+    flash("You have logged out")
     return redirect(url_for('login'))
 
 @app.route('/topics', methods=['GET', 'POST'])
@@ -106,6 +109,7 @@ def delete(id):
     delete_post = Post.query.filter_by(id = id).first()
     db_session.delete(delete_post)
     db_session.commit()
+    flash("Post has been deleted")
     return redirect("/post/" + str(delete_post.topic_id))
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -114,10 +118,11 @@ def update(id):
     if request.method == 'POST':
         post.content = request.form['content']
         db_session.commit()
+        flash("Post has been edited")
         return redirect("/post/" + str(post.topic_id))
     else:
         return render_template('update.html', post=post)
 
-
 if __name__ == "__main__":
     app.run()
+
