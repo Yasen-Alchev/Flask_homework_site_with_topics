@@ -1,4 +1,4 @@
-# FLASK homework #
+# FLASK Site #
 
 ## Install dependencies ##
 
